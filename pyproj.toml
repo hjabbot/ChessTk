@@ -1,0 +1,15 @@
+[build-system]
+requires = ["setuptools", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "ChessTk"
+version = "0.0.1"
+description = "Python chess engine with interface written in Tkinter"
+readme = "README.md"
+requires-python = ">=3.8"
+dependencies = [
+    "pillow",
+    "cairosvg",
+    "numpy"
+]
