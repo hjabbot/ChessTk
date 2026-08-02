@@ -4,8 +4,8 @@ from constants.ui import (
     BOARD_D_COLOR,
     BOARD_L_COLOR,
     BOARD_PADDING,
-    BOARD_SQUARE_SIZE,
     BOARD_SIZE,
+    BOARD_SQUARE_SIZE,
     GRIDSIZE,
     SPRITE_D_PAWN,
     SPRITE_L_PAWN,
@@ -16,27 +16,30 @@ from piece import Piece
 
 
 class MainWindow(tk.Tk):
-    def __init__(self, board_size=BOARD_SIZE, padding=BOARD_PADDING):
+    def __init__(self):
         super().__init__()
         self.title("Tkinter Chessboard")
-        self.geometry(f"{board_size + padding}x{board_size + padding}")
+        self.geometry(f"{BOARD_SIZE + BOARD_PADDING}x{BOARD_SIZE + BOARD_PADDING}")
         self.configure(bg=WINDOW_BACKGROUND_COLOR)
         
-        # 1. Create a frame wrapper with a border and padding
+        self.create_board()
+        self.draw_board()
+        self.draw_pieces()
+
+    def create_board(self):
+        # Create a frame wrapper with a border and padding
         self.board_frame = tk.Frame(self, bg=WINDOW_BACKGROUND_COLOR)
         self.board_frame.pack()
         
-        # 2. Place the canvas inside the frame
-        self.canvas = tk.Canvas(
+        # Place the canvas inside the frame
+        self.board_canvas = tk.Canvas(
             self.board_frame, 
-            width=board_size, 
-            height=board_size
+            width=BOARD_SIZE, 
+            height=BOARD_SIZE
         )
-        self.canvas.pack()
+        self.board_canvas.pack()
 
-        # 3. Draw the board in the canvas
-        self.draw_board()
-        self.draw_pieces()
+        return True
 
     def draw_board(self):
         colors = [BOARD_L_COLOR, BOARD_D_COLOR]
@@ -48,17 +51,17 @@ class MainWindow(tk.Tk):
                 x2 =  x1 + BOARD_SQUARE_SIZE
                 y2 =  y1 + BOARD_SQUARE_SIZE
                 
-                self.canvas.create_rectangle(
+                self.board_canvas.create_rectangle(
                     x1, y1, x2, y2, fill=color
                 )
 
     def draw_pieces(self):
-        self.light_pieces = [Piece('l_p',SPRITE_L_PAWN,Coordinates('b1'))]
-        self.dark_pieces  = [Piece('d_p',SPRITE_D_PAWN,Coordinates('g1'))]
+        self.light_pieces = [Piece('lp',SPRITE_L_PAWN,Coordinates('b1'))]
+        self.dark_pieces  = [Piece('dp',SPRITE_D_PAWN,Coordinates('g1'))]
 
         for piece in self.light_pieces + self.dark_pieces:
             piece.initialise_img_tk()
-            self.canvas.create_image(piece.coords.x, piece.coords.y, 
+            self.board_canvas.create_image(piece.coords.x, piece.coords.y, 
                                      anchor='sw', image=piece.img_tk)
 
 
