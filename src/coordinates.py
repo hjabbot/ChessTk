@@ -1,6 +1,6 @@
-from constants import BOARD_SQUARE_SIZE, BOARD_SIZE, GRIDSIZE
-
 from bitboard import Bitboard
+from constants.ui import BOARD_SIZE, BOARD_SQUARE_SIZE, GRIDSIZE
+
 
 class Coordinates:
     def __init__(self,coords):

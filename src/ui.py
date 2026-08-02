@@ -1,8 +1,19 @@
 import tkinter as tk
 
-from constants import *
-from piece import Piece
+from constants.ui import (
+    BOARD_D_COLOR,
+    BOARD_L_COLOR,
+    BOARD_PADDING,
+    BOARD_SQUARE_SIZE,
+    BOARD_SIZE,
+    GRIDSIZE,
+    SPRITE_D_PAWN,
+    SPRITE_L_PAWN,
+    WINDOW_BACKGROUND_COLOR,
+)
 from coordinates import Coordinates
+from piece import Piece
+
 
 class MainWindow(tk.Tk):
     def __init__(self, board_size=BOARD_SIZE, padding=BOARD_PADDING):

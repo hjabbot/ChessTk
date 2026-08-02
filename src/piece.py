@@ -1,6 +1,5 @@
-from constants import *
-
 from PIL import ImageTk
+
 
 class Piece:
     def __init__(self, id, img, coords):
