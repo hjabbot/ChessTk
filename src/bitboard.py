@@ -1,4 +1,4 @@
-import numpy as np
+from math import log2
 
 
 class Bitboard(int):
@@ -55,11 +55,11 @@ class Bitboard(int):
 
     @property
     def least_significant_bit(self):
-        return Bitboard(np.log2(self & -self))
+        return Bitboard(log2(self & -self))
 
     @property
     def most_significant_bit(self):
-        return Bitboard(np.log2(self))
+        return Bitboard(log2(self))
 
     @property
     def count(self):
