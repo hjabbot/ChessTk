@@ -1,7 +1,16 @@
 from math import log2
 
+import cython
 
-class Bitboard(int):
+
+@cython.cclass
+class Bitboard:
+
+    def __init__(self, value: int):
+        self.value = int(value)
+
+    def __int__(self):
+        return self.value
 
     def __str__(self):
         """
@@ -14,7 +23,7 @@ class Bitboard(int):
         # Output string
         output = ''
         # Copy bitboard so don't edit value
-        bitboard = int(self)
+        bitboard = self.value
         # For each row
         for r in range(8,-1,-1):
             # Add in row number if first character
@@ -42,24 +51,30 @@ class Bitboard(int):
     def __repr__(self):
         return str(self)
 
+    def __eq__(self, other):
+        return int(self) == int(other)
+
     def __add__(self, other):
-        assert type(self) == type(other), "Can only add two Bitboard objects together"
-        # Combine bitboards together as union
-        return Bitboard(self | other)
+        # Adds bits together, ignores overlap
+        return Bitboard(self.value | other)
 
     def __sub__(self, other):
-        assert type(self) == type(other), "Can only subtract two Bitboard objects together"
-        # Subtract any overlap from the first
-        # int(self) to avoid recursion calling self.__sub__
-        return Bitboard(int(self) - (self & other))
+        # Subtracts bits, only overlap
+        return Bitboard(self - (self.value & other))
+
+    def __neg__(self):
+        return Bitboard(-self.value)
+
+    def __and__(self, other):
+        return Bitboard(self.value & other)
 
     @property
     def least_significant_bit(self):
-        return Bitboard(log2(self & -self))
+        return Bitboard(self.value & -self.value)
 
     @property
     def most_significant_bit(self):
-        return Bitboard(log2(self))
+        return Bitboard(1 << (self.value.bit_length() - 1) if self.value > 0 else 0)
 
     @property
     def count(self):
@@ -69,14 +84,15 @@ class Bitboard(int):
         Returns:
             int: Number of positive bits
         """
-        bits = int(self)
+        bits = self.value
         n_bits = 0
         while bits > 0:
-            if bits % 1:
+            if bits & 1:
                 n_bits += 1
-            bits = bits >> 1
+            bits >>= 1
         return n_bits
 
+    @cython.ccall
     def shift(self, amount):
         """
         Shifts the bits by an amount
@@ -90,15 +106,14 @@ class Bitboard(int):
             Bitboard: New shifted bitboard
         """
         if amount > 0:
-            return Bitboard(self << amount)
+            return Bitboard(self.value << amount)
         else:
-            return Bitboard(self >> -amount)
+            return Bitboard(self.value >> -amount)
 
         
     
 if __name__ == "__main__":
-    bb = Bitboard(32)
+    bb = Bitboard(22)
     # bb = Bitboard(1037 << 4 * 8)
-    print(bb)
-    print(bb.least_significant_bit)
-    print(bb.most_significant_bit)
+    print(bb.count)
+    print(bb.shift(-1))
