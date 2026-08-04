@@ -20,3 +20,7 @@ package-dir = {"" = "src"}
 [[tool.setuptools.ext-modules]]
 name = "bitboard"
 sources = ["src/bitboard.py"]
+
+[[tool.setuptools.ext-modules]]
+name = "gamestate"
+sources = ["src/gamestate.py"]
