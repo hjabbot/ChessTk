@@ -1,12 +1,12 @@
-from math import log2
-
 import cython
 
 
 @cython.cclass
 class Bitboard:
+    # Initialise variable like C for cython speedup
+    value: cython.longlong
 
-    def __init__(self, value: int):
+    def __init__(self, value):
         self.value = int(value)
 
     def __int__(self):

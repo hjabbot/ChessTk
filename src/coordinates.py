@@ -20,8 +20,8 @@ class Coordinates:
         self.col = ord(self.file) - ord('a')
 
         # Pixel coordinates
-        self.x = self.row * BOARD_SQUARE_SIZE
-        self.y = BOARD_SIZE - self.col * BOARD_SQUARE_SIZE
+        self.x = self.col * BOARD_SQUARE_SIZE
+        self.y = BOARD_SIZE - self.row * BOARD_SQUARE_SIZE
 
         # Bitboard Coordinates, 
         # e.g. a1 = 000...001

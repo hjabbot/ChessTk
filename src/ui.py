@@ -7,12 +7,9 @@ from constants.ui import (
     BOARD_SIZE,
     BOARD_SQUARE_SIZE,
     GRIDSIZE,
-    SPRITE_D_PAWN,
-    SPRITE_L_PAWN,
     WINDOW_BACKGROUND_COLOR,
 )
-from coordinates import Coordinates
-from piece import Piece
+from gamestate import Gamestate
 
 
 class MainWindow(tk.Tk):
@@ -24,12 +21,13 @@ class MainWindow(tk.Tk):
         
         self.create_board()
         self.draw_board()
+        self.gamestate = Gamestate()
         self.draw_pieces()
 
     def create_board(self):
         # Create a frame wrapper with a border and padding
         self.board_frame = tk.Frame(self, bg=WINDOW_BACKGROUND_COLOR)
-        self.board_frame.pack()
+        self.board_frame.pack(fill=tk.BOTH, expand=True)
         
         # Place the canvas inside the frame
         self.board_canvas = tk.Canvas(
@@ -37,7 +35,7 @@ class MainWindow(tk.Tk):
             width=BOARD_SIZE, 
             height=BOARD_SIZE
         )
-        self.board_canvas.pack()
+        self.board_canvas.pack(expand=True)
 
         return True
 
@@ -56,10 +54,7 @@ class MainWindow(tk.Tk):
                 )
 
     def draw_pieces(self):
-        self.light_pieces = [Piece('lp',SPRITE_L_PAWN,Coordinates('b1'))]
-        self.dark_pieces  = [Piece('dp',SPRITE_D_PAWN,Coordinates('g1'))]
-
-        for piece in self.light_pieces + self.dark_pieces:
+        for piece in self.gamestate.pieces:
             piece.initialise_img_tk()
             self.board_canvas.create_image(piece.coords.x, piece.coords.y, 
                                      anchor='sw', image=piece.img_tk)
