@@ -10,7 +10,8 @@ readme = "README.md"
 requires-python = ">=3.8"
 dependencies = [
     "pillow",
-    "cairosvg"
+    "cairosvg",
+    "build"
 ]
 
 [tool.setuptools]

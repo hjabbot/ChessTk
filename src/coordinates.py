@@ -32,6 +32,24 @@ class Coordinates:
         # String coordinates
         return self.coords
 
+    def __eq__(self, other):
+        return self.bitboard == other.bitboard
+
     @property
     def pretty_str(self):
         print(self.bitboard)
+
+    """Min/Max x,y value of square 
+    """
+    @property
+    def square_min_x(self):
+        return  self.row * BOARD_SQUARE_SIZE
+    @property
+    def square_min_y(self):
+        return  (GRIDSIZE - self.col - 1) * BOARD_SQUARE_SIZE
+    @property
+    def square_max_x(self):
+        return  (self.row + 1) * BOARD_SQUARE_SIZE
+    @property
+    def square_max_y(self):
+        return  (GRIDSIZE - self.col) * BOARD_SQUARE_SIZE

@@ -1,18 +1,15 @@
-### Board Constants
+# .......................................................................... Size
 GRIDSIZE = 8
 BOARD_SIZE = 640
 BOARD_PADDING = 40
 BOARD_SQUARE_SIZE = BOARD_SIZE / GRIDSIZE
-BOARD_D_COLOR = "#B58863"
-BOARD_L_COLOR = "#F0D9B5"
 
 
-### Window Constants
+# .......................................................................... Window
 WINDOW_BACKGROUND_COLOR = "#2b2b2b"
 
 
-### Sprites
-
+# .......................................................................... Sprite
 # 1. Convert to format that Tkinter can use (png)
 from cairosvg import svg2png
 from PIL import Image
@@ -41,3 +38,26 @@ SPRITE_L_QUEEN  = _create_image("assets/sprites/l_queen.svg")
 SPRITE_D_QUEEN  = _create_image("assets/sprites/d_queen.svg")
 SPRITE_L_KING   = _create_image("assets/sprites/l_king.svg")
 SPRITE_D_KING   = _create_image("assets/sprites/d_king.svg")
+
+
+
+
+# .......................................................................... Colour
+SCOREBAR_BORDER_COLOUR	= 'black'
+
+SIDEBAR_BACKGROUND_COLOUR = 'wheat'
+
+DARK_SQUARE_COLOUR	= 'darkolivegreen4'
+LIGHT_SQUARE_COLOUR	= 'beige'
+
+SELECTION_COLOUR 			= 'deepskyblue'
+SELECTION_BORDER_THICKNESS 	= BOARD_SQUARE_SIZE // 10
+SELECTION_ALPHA  			= 150
+
+HIGHLIGHT_COLOUR 	= 'gold'
+HIGHLIGHT_ALPHA  	= 150
+
+CHECK_COLOUR		= 'firebrick'
+
+MOVES_COLOUR 		= 'deepskyblue'
+MOVES_ALPHA 		= 150
