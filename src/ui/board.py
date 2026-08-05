@@ -1,47 +1,38 @@
 import tkinter as tk
 
 from constants.ui import (
-    DARK_SQUARE_COLOUR,
-    LIGHT_SQUARE_COLOUR,
-    BOARD_PADDING,
     BOARD_SIZE,
     BOARD_SQUARE_SIZE,
+    DARK_SQUARE_COLOUR,
     GRIDSIZE,
-    WINDOW_BACKGROUND_COLOR,
-    HIGHLIGHT_COLOUR
+    HIGHLIGHT_COLOUR,
+    LIGHT_SQUARE_COLOUR,
 )
 from coordinates import Coordinates
 from gamestate import Gamestate
 
 
-class MainWindow(tk.Tk):
-    def __init__(self):
-        super().__init__()
-        self.title("Tkinter Chessboard")
-        self.geometry(f"{BOARD_SIZE + BOARD_PADDING}x{BOARD_SIZE + BOARD_PADDING}")
-        self.configure(bg=WINDOW_BACKGROUND_COLOR)
-
-        self.bind("<Button-1>", self.on_click)
-        
-        self.create_board()
-        self.draw_board()
-        self.gamestate = Gamestate()
-        self.draw_pieces()
-
-    def create_board(self):
-        # Create a frame wrapper with a border and padding
-        self.board_frame = tk.Frame(self, bg=WINDOW_BACKGROUND_COLOR)
-        self.board_frame.pack(fill=tk.BOTH, expand=True)
+class Board(tk.Frame):
+    def __init__(self, parent):
+        super().__init__(parent)
         
         # Place the canvas inside the frame
-        self.board_canvas = tk.Canvas(
-            self.board_frame, 
+        self.canvas = tk.Canvas(
+            self, 
             width=BOARD_SIZE, 
             height=BOARD_SIZE
         )
-        self.board_canvas.pack(expand=True)
+        self.canvas.pack(expand=True)
 
-        return True
+        # Bind events to actions
+        self.canvas.bind("<Button-1>", self.on_click)
+
+        self.gamestate = Gamestate()
+
+        self.draw_board()
+        self.draw_pieces()
+        self.highlight_square = None
+
 
     def draw_board(self):
         colors = [LIGHT_SQUARE_COLOUR, DARK_SQUARE_COLOUR]
@@ -53,19 +44,17 @@ class MainWindow(tk.Tk):
                 x2 =  x1 + BOARD_SQUARE_SIZE
                 y2 =  y1 + BOARD_SQUARE_SIZE
                 
-                self.board_canvas.create_rectangle(
+                self.canvas.create_rectangle(
                     x1, y1, x2, y2, fill=color
                 )
-
     def draw_pieces(self):
         for piece in self.gamestate.pieces:
             piece.initialise_img_tk()
-            self.board_canvas.create_image(piece.coords.x, piece.coords.y, 
+            self.canvas.create_image(piece.coords.x, piece.coords.y, 
                                      anchor='sw', image=piece.img_tk)
 
     def on_click(self, event):
-        try:    self.board_canvas.delete(self.highlight_square)
-        except: pass
+        self.canvas.delete(self.highlight_square)
         # Get x, 8 in grid coods e.g. 0,..,7
         file = int((event.x / BOARD_SQUARE_SIZE) // 1 + 1)
         rank = int(((BOARD_SIZE - event.y) / BOARD_SQUARE_SIZE) // 1)
@@ -73,15 +62,12 @@ class MainWindow(tk.Tk):
         file = str(file)
         rank = chr(rank + ord('a'))
         square = Coordinates(rank + file)
-        self.highlight_square = self.board_canvas.create_rectangle(
+        print(square)
+        self.highlight_square = self.canvas.create_rectangle(
                                     square.square_min_x,square.square_min_y,
                                     square.square_max_x,square.square_max_y,
                                     fill=HIGHLIGHT_COLOUR
         )
 
+        self.draw_pieces()
 
-
-
-if __name__ == "__main__":
-    app = MainWindow()
-    app.mainloop()
