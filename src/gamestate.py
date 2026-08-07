@@ -18,8 +18,6 @@ from constants.ui import (
 from piece import Piece
 from coordinates import Coordinates
 
-
-
 @cython.cclass
 class Gamestate:
 
@@ -31,14 +29,12 @@ class Gamestate:
                              if piece.side == DARK]
 
         self.turn = turn
-
-    @cython.cfunc
-    def calc_is_check(self):
-        return False
-
-    @property
-    def is_check(self):
-        return self.calc_is_check()
+        self.is_check = self._is_check()
+        self.is_checkmate = self._is_checkmate()
+        self.pins = self._pins()
+        self.castling_available = self._castling_available()
+        self.enpassant_available = self._enpassant_available()
+        self.moves_available = self._moves_available()
 
     @cython.cfunc
     def _gen_initial_pieces(self, piece_positions = INITIAL_BOARD):
@@ -76,3 +72,42 @@ class Gamestate:
 
                 pieces += [Piece(id, img, Coordinates(file+rank))]
         return pieces
+
+    @cython.cfunc
+    def _is_check(self):
+        pass
+
+    @cython.cfunc
+    def _is_checkmate(self):
+        pass
+
+    @cython.cfunc
+    def _pins(self):
+        pass
+
+    @cython.cfunc
+    def _castling_available(self):
+        pass
+
+    @cython.cfunc
+    def _enpassant_available(self):
+        pass
+
+    @cython.cfunc
+    def _moves_available(self):
+        pass
+
+    def make_move(self, piece, position):
+
+        # Check if move possible
+        try:
+            # Ensure piece can move to position and position is available
+            assert(piece.moves_available.bitboard & position.bitboard & self.moves_available)
+            # Ensures piece is not pinned
+            assert(piece.position.bitboard & self.pins == 0)
+        except AssertionError:
+            print("Move not possible")
+            return False
+        
+        self.turn = LIGHT if self.turn == DARK else DARK
+        

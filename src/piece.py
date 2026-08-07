@@ -1,6 +1,6 @@
 from PIL import ImageTk
 
-from constants.gamestate import LIGHT, DARK
+from constants.gamestate import DARK, LIGHT
 
 
 class Piece:
@@ -12,3 +12,6 @@ class Piece:
 
     def initialise_img_tk(self):
         self.img_tk = ImageTk.PhotoImage(self.img)
+
+    def moves_available(self, enemy_piece_positions, ally_piece_positions, pin_positions):
+        pass
