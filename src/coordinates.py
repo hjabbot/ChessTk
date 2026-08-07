@@ -43,13 +43,13 @@ class Coordinates:
     """
     @property
     def square_min_x(self):
-        return  self.row * BOARD_SQUARE_SIZE
+        return  (self.col) * BOARD_SQUARE_SIZE
     @property
     def square_min_y(self):
-        return  (GRIDSIZE - self.col - 1) * BOARD_SQUARE_SIZE
+        return  (GRIDSIZE - self.row) * BOARD_SQUARE_SIZE
     @property
     def square_max_x(self):
-        return  (self.row + 1) * BOARD_SQUARE_SIZE
+        return  (self.col + 1) * BOARD_SQUARE_SIZE
     @property
     def square_max_y(self):
-        return  (GRIDSIZE - self.col) * BOARD_SQUARE_SIZE
+        return  (GRIDSIZE - self.row - 1) * BOARD_SQUARE_SIZE
