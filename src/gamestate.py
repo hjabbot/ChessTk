@@ -1,20 +1,6 @@
 import cython  # noqa: I001
 
 from constants.gamestate import DARK, LIGHT, INITIAL_BOARD
-from constants.ui import (
-    SPRITE_D_BISHOP,
-    SPRITE_D_KING,
-    SPRITE_D_KNIGHT,
-    SPRITE_D_PAWN,
-    SPRITE_D_QUEEN,
-    SPRITE_D_ROOK,
-    SPRITE_L_BISHOP,
-    SPRITE_L_KING,
-    SPRITE_L_KNIGHT,
-    SPRITE_L_PAWN,
-    SPRITE_L_QUEEN,
-    SPRITE_L_ROOK,
-)
 from piece import Piece
 from coordinates import Coordinates
 
@@ -54,23 +40,9 @@ class Gamestate:
             for rank in '87654321':
                 x = ord(file) - ord('a')
                 y = 8 - int(rank)
-                id = piece_positions[y][x]
-                
-                if   id == '..':    continue
-                elif id == 'dp':    img = SPRITE_D_PAWN
-                elif id == 'lp':    img = SPRITE_L_PAWN
-                elif id == 'dR':    img = SPRITE_D_ROOK
-                elif id == 'lR':    img = SPRITE_L_ROOK
-                elif id == 'dN':    img = SPRITE_D_KNIGHT
-                elif id == 'lN':    img = SPRITE_L_KNIGHT
-                elif id == 'dB':    img = SPRITE_D_BISHOP
-                elif id == 'lB':    img = SPRITE_L_BISHOP
-                elif id == 'dQ':    img = SPRITE_D_QUEEN
-                elif id == 'lQ':    img = SPRITE_L_QUEEN
-                elif id == 'dK':    img = SPRITE_D_KING
-                elif id == 'lK':    img = SPRITE_L_KING
-
-                pieces += [Piece(id, img, Coordinates(file+rank))]
+                piece_id = piece_positions[y][x]
+                if piece_id != '..':
+                    pieces += [Piece(piece_id, Coordinates(file+rank))]
         return pieces
 
     @cython.cfunc

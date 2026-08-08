@@ -39,6 +39,20 @@ SPRITE_D_QUEEN  = _create_image("assets/sprites/d_queen.svg")
 SPRITE_L_KING   = _create_image("assets/sprites/l_king.svg")
 SPRITE_D_KING   = _create_image("assets/sprites/d_king.svg")
 
+SPRITE_FROM_ID = {
+    "lp": SPRITE_L_PAWN,
+    "dp": SPRITE_D_PAWN,
+    "lR": SPRITE_L_ROOK,
+    "dR": SPRITE_D_ROOK,
+    "lN": SPRITE_L_KNIGHT,
+    "dN": SPRITE_D_KNIGHT,
+    "lB": SPRITE_L_BISHOP,
+    "dB": SPRITE_D_BISHOP,
+    "lQ": SPRITE_L_QUEEN,
+    "dQ": SPRITE_D_QUEEN,
+    "lK": SPRITE_L_KING,
+    "dK": SPRITE_D_KING,
+}
 
 
 
